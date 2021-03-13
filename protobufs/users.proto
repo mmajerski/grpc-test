@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package users;
+
+import "types.proto";
+
+option go_package = "grpc";
+
+service Users {
+  rpc Create(CreateUserRequest) returns (UserReply) {}
+  rpc FindByID(FindByIDRequest) returns (UserReply) {}
+  rpc FindByEmail(FindByEmailRequest) returns (UserReply) {}
+  rpc Update(UpdateUserRequest) returns (UserReply) {}
+  rpc Delete(DeleteUserRequest) returns (UserReply) {}
+}
+
+message CreateUserRequest {
+  types.CreateUser newUser = 1;
+  string JWT = 2;
+}
+
+message FindByIDRequest {
+  int64 id = 1;
+  string JWT = 2;
+}
+
+message FindByEmailRequest {
+  string email = 1;
+  string JWT = 2;
+}
+
+message UpdateUserRequest {
+  int64 id = 1;
+  string newPassword = 2;
+  string firstName = 3;
+  string lastName = 4;
+  string JWT = 5;
+}
+
+message DeleteUserRequest {
+  int64 id = 1;
+  string JWT = 2;
+}
+
+message UserReply {
+  types.User user = 1;
+}
